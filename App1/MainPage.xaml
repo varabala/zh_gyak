@@ -1,0 +1,59 @@
+﻿<Page
+    x:Class="UwpApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:UwpApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="using:UwpApp.Converters"
+    mc:Ignorable="d">
+
+
+	<Page.Resources>
+		<converters:ColorConverter x:Key="ColorConverter"/>
+	</Page.Resources>
+	
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+
+		<!-- Laptopok listája -->
+		<ListView Grid.Column="0"
+                  ItemsSource="{x:Bind DataModel.Laptops, Mode=OneWay}"
+                  SelectedItem="{x:Bind DataModel.SelectedLaptop, Mode=TwoWay}">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Notebook">
+					<StackPanel>
+						<TextBlock Text="{x:Bind Brand}"/>
+						<TextBlock Text="{x:Bind Memory}"/>
+						<TextBlock Text="{x:Bind Processor}"/>
+						<TextBlock Text="{x:Bind Color}"/>
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<ListView.ItemTemplate>
+			<DataTemplate x:DataType="local:Notebook">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{x:Bind Description}"
+                               Foreground="{x:Bind Color, Converter={StaticResource ColorConverter}}"/>
+				</StackPanel>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+		<StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+			<Button Content="Új laptop hozzáadása"
+                    Command="{x:Bind DataModel.AddLaptopCommand}"/>
+		</StackPanel>
+		
+		<!-- Kiválasztott laptop tulajdonságainak szerkesztése -->
+		<StackPanel Grid.Column="1" DataContext="{x:Bind DataModel.SelectedLaptop, Mode=OneWay}">
+			<TextBox Header="Márka" Text="{Binding Brand, Mode=TwoWay}"/>
+			<Slider Header="Memória" Minimum="4" Maximum="32" Value="{Binding Memory, Mode=TwoWay}"/>
+			<TextBox Header="Szín" Text="{Binding Color, Mode=TwoWay}"/>
+			<TextBox Header="Processzor" Text="{Binding Processor, Mode=TwoWay}"/>
+		</StackPanel>
+	</Grid>
+</Page>
