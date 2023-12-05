@@ -1,33 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace App1
+namespace UwpApp
 {
-    public sealed partial class MainPage : Page
-{
-    public DataModel DataModel { get; } = new DataModel();
-
-    public MainPage()
+    public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
-        this.InitializeComponent();
-        // Teszt adatok hozzáadása a listához
-        DataModel.Laptops.Add(new Notebook { Brand = "Dell", Memory = 16, Processor = "i7", Color = "Black" });
-        // További notebookok hozzáadása...
-    }
-}
+        private DataModel dataModel;
 
+        public MainPage()
+        {
+            this.InitializeComponent();
+            dataModel = new DataModel();
+            // Teszt adatok inicializálása
+            DataModel.Laptops.Add(new Notebook { Brand = "Toshiba", Memory = 8, Processor = "i5", Color = "Black" });
+            // További Notebook objektumok hozzáadása a Laptops kollekcióhoz...
+            this.DataContext = this;
+        }
+
+        public DataModel DataModel
+        {
+            get => dataModel;
+            set
+            {
+                if (dataModel != value)
+                {
+                    dataModel = value;
+                    OnPropertyChanged(nameof(DataModel));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
 }
