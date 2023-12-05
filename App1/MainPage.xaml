@@ -43,6 +43,10 @@
 				</StackPanel>
 			</DataTemplate>
 		</ListView.ItemTemplate>
+		<StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+			<Button Content="Új laptop hozzáadása"
+                    Command="{x:Bind DataModel.AddLaptopCommand}"/>
+		</StackPanel>
 		
 		<!-- Kiválasztott laptop tulajdonságainak szerkesztése -->
 		<StackPanel Grid.Column="1" DataContext="{x:Bind DataModel.SelectedLaptop, Mode=OneWay}">

@@ -12,6 +12,20 @@ public class DataModel
             OnPropertyChanged(nameof(SelectedLaptop));
         }
     }
+    public ButtonCommand AddLaptopCommand { get; set; }
+
+    public DataModel()
+    {
+        AddLaptopCommand = new ButtonCommand(AddLaptop);
+    }
+
+    private void AddLaptop()
+    {
+        if (Laptops.Count < 10) // Feltételezve, hogy maximum 10 laptop lehet a listában.
+        {
+            Laptops.Add(new Notebook { Brand = "New Brand", Memory = 8, Processor = "New Processor", Color = "New Color" });
+        }
+    }
 
     // Az INotifyPropertyChanged interfész implementálása itt is szükséges
     // ...
