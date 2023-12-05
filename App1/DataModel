@@ -1,0 +1,18 @@
+public class DataModel
+{
+    public ObservableCollection<Notebook> Laptops { get; set; } = new ObservableCollection<Notebook>();
+
+    private Notebook selectedLaptop;
+    public Notebook SelectedLaptop
+    {
+        get => selectedLaptop;
+        set
+        {
+            selectedLaptop = value;
+            OnPropertyChanged(nameof(SelectedLaptop));
+        }
+    }
+
+    // Az INotifyPropertyChanged interfész implementálása itt is szükséges
+    // ...
+}
