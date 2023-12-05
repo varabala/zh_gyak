@@ -5,6 +5,15 @@ public class Notebook : INotifyPropertyChanged
     private string color;
     private string processor;
 
+
+    public string Description
+    {
+        get
+        {
+            return $"{Brand} laptop, {Memory} GB memória, szín: {Color}";
+        }
+    }
+
     public string Brand
     {
         get => brand;

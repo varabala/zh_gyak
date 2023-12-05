@@ -5,8 +5,14 @@
     xmlns:local="using:UwpApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="using:UwpApp.Converters"
     mc:Ignorable="d">
 
+
+	<Page.Resources>
+		<converters:ColorConverter x:Key="ColorConverter"/>
+	</Page.Resources>
+	
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
@@ -29,6 +35,15 @@
 			</ListView.ItemTemplate>
 		</ListView>
 
+		<ListView.ItemTemplate>
+			<DataTemplate x:DataType="local:Notebook">
+				<StackPanel Orientation="Horizontal">
+					<TextBlock Text="{x:Bind Description}"
+                               Foreground="{x:Bind Color, Converter={StaticResource ColorConverter}}"/>
+				</StackPanel>
+			</DataTemplate>
+		</ListView.ItemTemplate>
+		
 		<!-- Kiválasztott laptop tulajdonságainak szerkesztése -->
 		<StackPanel Grid.Column="1" DataContext="{x:Bind DataModel.SelectedLaptop, Mode=OneWay}">
 			<TextBox Header="Márka" Text="{Binding Brand, Mode=TwoWay}"/>
